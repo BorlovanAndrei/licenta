@@ -10,6 +10,11 @@ import generalRoutes from "./routes/general.js";
 import managementRoutes from "./routes/management.js";
 import salesRoutes from "./routes/sales.js";
 
+// data imports
+import Plan from "./models/Plan.js";
+import PlanStat from "./models/PlanStat.js";
+import {dataPlan, dataPlanStat} from "./data/index.js";
+
 
 // Configurations
 dotenv.config();
@@ -39,5 +44,9 @@ mongoose.connect(process.env.MONGO_URL, {
 })
 .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
+    //add once to the db
+    //Plan.insertMany(dataPlan);
+    //PlanStat.insertMany(dataPlanStat);
 })
 .catch((error) => console.log(`${error} did not connect`));
