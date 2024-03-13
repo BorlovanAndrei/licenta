@@ -153,12 +153,13 @@ const Plan = ({
                         fullWidth
                         margin="normal"
                     />
-                    <Button variant="contained" onClick={handleUpdate}>Update Plan</Button>
+                    <Button variant="contained" sx={{color: "white"}} onClick={handleUpdate}>Update Plan</Button>
                 </Box>
             </Modal>
         </Card>
     )
 }
+//
 
 const Plans = () => {
     const {data, isLoading, refetch} = useGetPlansQuery();
@@ -264,7 +265,7 @@ const Plans = () => {
             fullWidth
             margin="normal"
           />
-          <Button variant="contained" onClick={handleAddPlan} disabled={isCreatingPlan}>Add Plan</Button>
+          <Button variant="contained" sx={{color: "white"}} onClick={handleAddPlan} disabled={isCreatingPlan}>Add Plan</Button>
         </Box>
       </Modal>
 
