@@ -9,9 +9,11 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
+  Modal,
+  TextField
 } from "@mui/material";
 import Header from "components/Header";
-import { useGetPlansQuery } from "state/api";
+import { useGetPlansQuery, useCreatePlanMutation } from "state/api";
 
 
 const Plan = ({
@@ -67,9 +69,6 @@ const Plan = ({
                 <CardContent>
                     <Typography variant="h5">{description}</Typography>
                     <Typography>id: {_id}</Typography>
-                    
-                    {/* <Typography>Yearly Sales This Year: {stat.yearlySalesTotal}</Typography>
-                    <Typography>Yearly Units Sold This Year: {stat.yearlyTotalSoldUnits}</Typography> */}
                 </CardContent>
             </Collapse>
         </Card>
@@ -77,11 +76,40 @@ const Plan = ({
 }
 
 const Plans = () => {
-    const {data, isLoading} = useGetPlansQuery();
+    const {data, isLoading, refetch} = useGetPlansQuery();
     const isNonMobile = useMediaQuery("(min-width: 1000px");
     console.log("data", data);
-  return <Box m="1.5rem 2.5rem">
 
+    const [isAddingPlan, setIsAddingPlan] = useState(false);
+  const [newPlanData, setNewPlanData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+  });
+  const [createPlan, { isLoading: isCreatingPlan }] = useCreatePlanMutation();
+
+  const handleAddPlan = async () => {
+    try {
+      await createPlan(newPlanData).unwrap();
+      setIsAddingPlan(false);
+      refetch();
+      setNewPlanData({
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+      });
+    } catch (error) {
+      console.error("Failed to add plan:", error);
+    }
+  };
+
+
+  return <Box m="1.5rem 2.5rem">
+        <Button variant="contained" onClick={() => setIsAddingPlan(true)}>
+        Add New Plan
+      </Button>
     <Header title="PLANS" subtitle="See all the plans!" />
     {data || !isLoading ? (
         <Box 
@@ -119,6 +147,44 @@ const Plans = () => {
     ) : ( 
         <>Loading...</>
     )}
+
+<Modal open={isAddingPlan} onClose={() => setIsAddingPlan(false)}>
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, maxWidth: '80vw' }}>
+          <Typography variant="h6" gutterBottom>Add New Plan</Typography>
+          <TextField
+            label="Name"
+            value={newPlanData.name}
+            onChange={(e) => setNewPlanData({ ...newPlanData, name: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Description"
+            value={newPlanData.description}
+            onChange={(e) => setNewPlanData({ ...newPlanData, description: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Price"
+            value={newPlanData.price}
+            onChange={(e) => setNewPlanData({ ...newPlanData, price: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Category"
+            value={newPlanData.category}
+            onChange={(e) => setNewPlanData({ ...newPlanData, category: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
+          <Button variant="contained" onClick={handleAddPlan} disabled={isCreatingPlan}>Add Plan</Button>
+        </Box>
+      </Modal>
+
+
+
   </Box>
 }
 

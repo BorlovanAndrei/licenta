@@ -9,7 +9,14 @@ export const api = createApi({
             query: () => "client/plans",
             providesTags: ["Plans"],
         }),
+        createPlan: build.mutation({
+            query: (newPlanData) => ({
+              url: '/plans',
+              method: 'POST',
+              body: newPlanData,
+            }),
+          }),
     }),
 });
 
-export const {useGetPlansQuery} = api;
+export const {useGetPlansQuery, useCreatePlanMutation} = api;

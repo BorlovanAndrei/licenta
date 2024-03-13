@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 
+//const Plan = require('./models/Plan.js');
 
 // Routes
 app.use("/client", clientRoutes);
@@ -34,6 +35,22 @@ app.use("/general", generalRoutes);
 app.use("/management", managementRoutes);
 app.use("/sales", salesRoutes);
 
+app.post("/plans", async (req, res) => {
+    const name = req.body.name;
+    const price = req.body.price;
+    const description = req.body.description;
+    const category = req.body.category;
+
+    const plan = await Plan.create({
+        name: name,
+        price: price,
+        description: description,
+        category: category
+    });
+
+    res.json({plan: plan});
+
+})
 
 // Mongoose setup
 const PORT = process.env.PORT || 9000;
