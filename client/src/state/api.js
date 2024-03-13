@@ -16,7 +16,21 @@ export const api = createApi({
               body: newPlanData,
             }),
           }),
+          //edit here
+        deletePlan: build.mutation({
+            query: (planId) => ({
+                url: `/plans/${planId}`,
+                method: 'DELETE',
+            }),
+        }),
+        updatePlan: build.mutation({
+            query: ({ planId, ...updatedPlanData }) => ({
+                url: `/plans/${planId}`,
+                method: 'PUT',
+                body: updatedPlanData,
+            }),
+        }),
     }),
 });
 
-export const {useGetPlansQuery, useCreatePlanMutation} = api;
+export const {useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation } = api;

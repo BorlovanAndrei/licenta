@@ -50,7 +50,45 @@ app.post("/plans", async (req, res) => {
 
     res.json({plan: plan});
 
-})
+});
+
+app.put("/plans/:id", async (req, res) => {
+    const planId = req.params.id;
+
+    const {name, price, description, category} = req.body;
+
+    await Plan.findByIdAndUpdate(planId, {
+        name,
+        price,
+        description,
+        category,
+    });
+
+    const plan = await Plan.findById(planId);
+
+    res.json({plan});
+
+});
+
+app.get("/plans/:id", async (req, res) =>{
+    const planId = req.params.id;
+
+    const plan = await Plan.findById(planId);
+
+    res.json({plan: plan});
+});
+
+
+app.delete("/plans/:id", async (req, res) =>{
+    const planId = req.params.id;
+    try {
+        await Plan.deleteOne({ _id: planId });
+        res.json({ success: "Record deleted" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete record" });
+    }
+});
+
 
 // Mongoose setup
 const PORT = process.env.PORT || 9000;

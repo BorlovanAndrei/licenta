@@ -13,7 +13,7 @@ import {
   TextField
 } from "@mui/material";
 import Header from "components/Header";
-import { useGetPlansQuery, useCreatePlanMutation } from "state/api";
+import { useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation } from "state/api";
 
 
 const Plan = ({
@@ -21,20 +21,55 @@ const Plan = ({
     name, 
     description,
     price,
-    category,
-    stat
+    category
 })=> {
     const theme = useTheme();
     const [isExpended, setIsExpended] = useState(false);
 
+    //here
+    const {refetch} = useGetPlansQuery();
+    const [isEditing, setIsEditing] = useState(false);
+    const [deletePlan] = useDeletePlanMutation();
+    const [updatePlan] = useUpdatePlanMutation();
+    const [editedPlanData, setEditedPlanData] = useState({
+        name,
+        description,
+        price,
+        category
+    });
 
+    const handleEdit = () => {
+      setIsEditing(true);
+  };
+
+  const handleDelete = async () => {
+      try {
+          await deletePlan(_id);
+          refetch();
+      } catch (error) {
+          console.error("Failed to delete plan:", error);
+      }
+  };
+
+  const handleUpdate = async () => {
+      try {
+          await updatePlan({ planId: _id, ...editedPlanData });
+          setIsEditing(false);
+          refetch();
+      } catch (error) {
+          console.error("Failed to update plan:", error);
+      }
+  };
+
+  //untill here
 
     return(
         <Card 
         sx={{
             backgroundImage: "none",
             backgroundColor: theme.palette.background.alt,
-            borderRadius: "0.55rem"
+            borderRadius: "0.55rem",
+            marginBottom: '1rem'
         }}
         >
             <CardContent>
@@ -57,6 +92,22 @@ const Plan = ({
                 >
                     See more
                 </Button>
+                <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={handleEdit}
+                    sx={{ color: 'white' }}
+                >
+                    Edit
+                </Button>
+                <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={handleDelete}
+                    sx={{ color: 'white' }}
+                >
+                    Delete
+                </Button>
             </CardActions>
             <Collapse 
                 in={isExpended}
@@ -71,6 +122,40 @@ const Plan = ({
                     <Typography>id: {_id}</Typography>
                 </CardContent>
             </Collapse>
+            <Modal open={isEditing} onClose={() => setIsEditing(false)}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, maxWidth: '80vw' }}>
+                    <Typography variant="h6" gutterBottom>Edit Plan</Typography>
+                    <TextField
+                        label="Name"
+                        value={editedPlanData.name}
+                        onChange={(e) => setEditedPlanData({ ...editedPlanData, name: e.target.value })}
+                        fullWidth
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Description"
+                        value={editedPlanData.description}
+                        onChange={(e) => setEditedPlanData({ ...editedPlanData, description: e.target.value })}
+                        fullWidth
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Price"
+                        value={editedPlanData.price}
+                        onChange={(e) => setEditedPlanData({ ...editedPlanData, price: e.target.value })}
+                        fullWidth
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Category"
+                        value={editedPlanData.category}
+                        onChange={(e) => setEditedPlanData({ ...editedPlanData, category: e.target.value })}
+                        fullWidth
+                        margin="normal"
+                    />
+                    <Button variant="contained" onClick={handleUpdate}>Update Plan</Button>
+                </Box>
+            </Modal>
         </Card>
     )
 }
@@ -107,7 +192,7 @@ const Plans = () => {
 
 
   return <Box m="1.5rem 2.5rem">
-        <Button variant="contained" onClick={() => setIsAddingPlan(true)}>
+        <Button variant="contained" sx={{color: "white"}} onClick={() => setIsAddingPlan(true)}>
         Add New Plan
       </Button>
     <Header title="PLANS" subtitle="See all the plans!" />
