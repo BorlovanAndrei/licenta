@@ -33,7 +33,28 @@ export const api = createApi({
             query: () => "client/members",
             providesTags: ["Members"],
           }),
+        createMember: build.mutation({
+            query: (newMemberData) => ({
+              url: 'client/members',
+              method: 'POST',
+              body: newMemberData,
+            }),
+          }),
+        deleteMember: build.mutation({
+            query: (memberId) => ({
+                url: `client/members/${memberId}`,
+                method: 'DELETE',
+            }),
+        }),
+        updateMember: build.mutation({
+            query: ({ memberId, ...updatedMemberData }) => ({
+                url: `client/members/${memberId}`,
+                method: 'PUT',
+                body: updatedMemberData,
+            }),
+        }),
     }),
 });
 
-export const {useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation, useGetMembersQuery } = api;
+export const {useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation, 
+useGetMembersQuery, useCreateMemberMutation, useDeleteMemberMutation, useUpdateMemberMutation} = api;

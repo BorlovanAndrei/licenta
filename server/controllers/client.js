@@ -2,6 +2,7 @@ import Plan from "../models/Plan.js"
 import PlanStat from "../models/PlanStat.js"
 import User from "../models/User.js";
 
+//PLANS
 export const getPlans = async (req, res) =>{
     try{
         const plans = await Plan.find();
@@ -18,15 +19,6 @@ export const getPlans = async (req, res) =>{
             })
         );
         res.status(200).json(plansWithStats);
-    }catch{
-        res.status(404).json({message: error.message});
-    }
-}
-
-export const getMembers = async (req, res) => {
-    try{
-        const customers = await User.find().select("-password");
-        res.status(200).json(customers);
     }catch{
         res.status(404).json({message: error.message});
     }
@@ -85,6 +77,78 @@ export const deletePlan = async (req, res) =>{
     try {
         const planId = req.params.id;
         await Plan.deleteOne({ _id: planId });
+        res.status(200).json({ success: "Record deleted" });
+    } catch (error) {
+        res.status(404).json({ error: "Failed to delete record" });
+    }
+};
+
+//MEMBERS
+
+export const getMembers = async (req, res) => {
+    try{
+        const customers = await User.find().select("-password");
+        res.status(200).json(customers);
+    }catch(error){
+        res.status(404).json({message: error.message});
+    }
+}
+
+
+export const createMember = async (req, res) => {
+    try{
+        const name = req.body.name;
+        const email = req.body.email;
+        const phoneNumber = req.body.phoneNumber;
+        const address = req.body.address;
+        const transactions = req.body.transactions;
+        const password = req.body.password;
+
+        const member = await User.create({
+            name: name,
+            email: email,
+            password: password,
+            phoneNumber: phoneNumber,
+            address: address,
+            transactions: transactions
+        });
+
+        res.status(200).json({member: member});
+    }catch(error){
+        res.status(404).json({message: error.message});
+
+    }
+};
+
+export const updateMember = async (req, res) => {
+    try{
+        const memberId = req.params.id;
+
+        const {name, email, phoneNumber, address, transactions} = req.body;
+
+        await User.findByIdAndUpdate(memberId, {
+            name,
+            email,
+            phoneNumber,
+            address,
+            transactions
+        });
+
+        const member = await User.findById(memberId);
+
+        res.status(200).json({member});
+    }catch(error){
+        res.status(404).json({message: error.message});
+
+    }
+
+};
+
+export const deleteMember = async (req, res) =>{
+    
+    try {
+        const memberId = req.params.id;
+        await User.deleteOne({ _id: memberId });
         res.status(200).json({ success: "Record deleted" });
     } catch (error) {
         res.status(404).json({ error: "Failed to delete record" });
