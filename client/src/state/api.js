@@ -11,21 +11,20 @@ export const api = createApi({
         }),
         createPlan: build.mutation({
             query: (newPlanData) => ({
-              url: '/plans',
+              url: 'client/plans',
               method: 'POST',
               body: newPlanData,
             }),
           }),
-          //edit here
         deletePlan: build.mutation({
             query: (planId) => ({
-                url: `/plans/${planId}`,
+                url: `client/plans/${planId}`,
                 method: 'DELETE',
             }),
         }),
         updatePlan: build.mutation({
             query: ({ planId, ...updatedPlanData }) => ({
-                url: `/plans/${planId}`,
+                url: `client/plans/${planId}`,
                 method: 'PUT',
                 body: updatedPlanData,
             }),

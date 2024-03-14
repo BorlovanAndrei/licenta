@@ -37,59 +37,15 @@ app.use("/management", managementRoutes);
 app.use("/sales", salesRoutes);
 
 
-app.post("/plans", async (req, res) => {
-    const name = req.body.name;
-    const price = req.body.price;
-    const description = req.body.description;
-    const category = req.body.category;
 
-    const plan = await Plan.create({
-        name: name,
-        price: price,
-        description: description,
-        category: category
-    });
+// app.get("/plans/:id", async (req, res) =>{
+//     const planId = req.params.id;
 
-    res.json({plan: plan});
+//     const plan = await Plan.findById(planId);
 
-});
+//     res.json({plan: plan});
+// });
 
-app.put("/plans/:id", async (req, res) => {
-    const planId = req.params.id;
-
-    const {name, price, description, category} = req.body;
-
-    await Plan.findByIdAndUpdate(planId, {
-        name,
-        price,
-        description,
-        category,
-    });
-
-    const plan = await Plan.findById(planId);
-
-    res.json({plan});
-
-});
-
-app.get("/plans/:id", async (req, res) =>{
-    const planId = req.params.id;
-
-    const plan = await Plan.findById(planId);
-
-    res.json({plan: plan});
-});
-
-
-app.delete("/plans/:id", async (req, res) =>{
-    const planId = req.params.id;
-    try {
-        await Plan.deleteOne({ _id: planId });
-        res.json({ success: "Record deleted" });
-    } catch (error) {
-        res.status(500).json({ error: "Failed to delete record" });
-    }
-});
 
 
 // Mongoose setup
