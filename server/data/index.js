@@ -16,7 +16,31 @@ export const dataPlan = [
     },
 ]
 
+export const dataUser =[
+  {
+    _id: "63701cc1f03239c72c00017f",
+    name: "Andrei",
+    email: "andrei@bor.ro",
+    password: "andand",
+    phoneNumber: "0711222333",
+    address: "Str. Aliorului", 
+    transactions: [
+      "63701d74f0323986f3000158"
+    ],
+  },
+  {
+    _id: "63701cc1f03239c72c00017a",
+    name: "Cata",
+    email: "cata@brr.io",
+    password: "catcat",
+    phoneNumber: "0711222444",
+    address: "Str. Niculitel", 
+    transactions: [
+      "63701d74f0323986f3000158"
+    ],
+  },
 
+]
 
 
 

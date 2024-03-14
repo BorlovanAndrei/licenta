@@ -1,5 +1,6 @@
 import Plan from "../models/Plan.js"
 import PlanStat from "../models/PlanStat.js"
+import User from "../models/User.js";
 
 export const getPlans = async (req, res) =>{
     try{
@@ -21,6 +22,16 @@ export const getPlans = async (req, res) =>{
         res.status(404).json({message: error.message});
     }
 }
+
+export const getMembers = async (req, res) => {
+    try{
+        const customers = await User.find().select("-password");
+        res.status(200).json(customers);
+    }catch{
+        res.status(404).json({message: error.message});
+    }
+}
+
 
 // export const createPlan = async (req, res) => {
 //     const { name, price, description, category } = req.body;
@@ -46,4 +57,39 @@ export const getPlans = async (req, res) =>{
 //     } catch (error) {
 //         res.status(500).json({ message: error.message });
 //     }
+// };
+
+// export const createPlan = async (req, res) => {
+//     const name = req.body.name;
+//     const price = req.body.price;
+//     const description = req.body.description;
+//     const category = req.body.category;
+
+//     const plan = await Plan.create({
+//         name: name,
+//         price: price,
+//         description: description,
+//         category: category
+//     });
+
+//     res.json({plan: plan});
+
+// };
+
+// export const updatePlan = async (req, res) => {
+//     const planId = req.params.id;
+
+//     const {name, price, description, category} = req.body;
+
+//     await Plan.findByIdAndUpdate(planId, {
+//         name,
+//         price,
+//         description,
+//         category,
+//     });
+
+//     const plan = await Plan.findById(planId);
+
+//     res.json({plan});
+
 // };

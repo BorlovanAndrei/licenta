@@ -30,7 +30,11 @@ export const api = createApi({
                 body: updatedPlanData,
             }),
         }),
+        getMembers: build.query({
+            query: () => "client/members",
+            providesTags: ["Members"],
+          }),
     }),
 });
 
-export const {useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation } = api;
+export const {useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation, useGetMembersQuery } = api;
