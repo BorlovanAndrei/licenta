@@ -72,10 +72,14 @@ export const api = createApi({
           query: () => "sales/sales",
           providesTags: ["Sales"],
         }),
+        getTransactionForChart: build.query({
+          query: () => "client/transactionsChart", // Update with your actual endpoint
+          providesTags: ["Transactions"],
+      }),
     }),
 });
 
 export const {useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation, 
 useGetMembersQuery, useCreateMemberMutation, useDeleteMemberMutation, useUpdateMemberMutation,
 useGetTransactionsQuery, useCreateTransactionMutation,
-useGetSalesQuery } = api;
+useGetSalesQuery, useGetTransactionForChartQuery } = api;

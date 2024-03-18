@@ -196,6 +196,15 @@ export const getTransactions = async (req, res) => {
       }
 }
 
+export const getTransactionForChart = async (req, res) => {
+    try{
+        const transaction = await Transaction.find();
+        res.status(200).json(transaction);
+    }catch{
+        res.status(404).json({message: error.message});
+    }
+}
+
 export const createTransaction = async (req, res) => {
     try{
         const userId = req.body.userId;
