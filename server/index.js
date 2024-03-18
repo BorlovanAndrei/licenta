@@ -15,7 +15,8 @@ import Plan from "./models/Plan.js";
 import PlanStat from "./models/PlanStat.js";
 import User from "./models/User.js";
 import Transaction from './models/Transaction.js';
-import {dataPlan, dataPlanStat, dataUser, dataTransaction} from "./data/index.js";
+import OverallStat from './models/OverallStats.js';
+import {dataPlan, dataPlanStat, dataUser, dataTransaction, dataOverallStat} from "./data/index.js";
 
 
 // Configurations
@@ -64,5 +65,6 @@ mongoose.connect(process.env.MONGO_URL, {
     //PlanStat.insertMany(dataPlanStat);
     // User.insertMany(dataUser);
     //Transaction.insertMany(dataTransaction);
+    //OverallStat.insertMany(dataOverallStat);
 })
 .catch((error) => console.log(`${error} did not connect`));
