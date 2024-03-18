@@ -1,5 +1,6 @@
 import Plan from "../models/Plan.js"
 import PlanStat from "../models/PlanStat.js"
+import Transaction from "../models/Transaction.js";
 import User from "../models/User.js";
 
 //PLANS
@@ -154,3 +155,63 @@ export const deleteMember = async (req, res) =>{
         res.status(404).json({ error: "Failed to delete record" });
     }
 };
+
+
+// Transactions
+
+export const getTransactions = async (req, res) => {
+    try {
+        const { page = 1, pageSize = 20, sort = null, search = "" } = req.query;
+    
+        const generateSort = () => {
+          const sortParsed = JSON.parse(sort);
+          const sortFormatted = {
+            [sortParsed.field]: (sortParsed.sort = "asc" ? 1 : -1),
+          };
+    
+          return sortFormatted;
+        };
+        const sortFormatted = Boolean(sort) ? generateSort() : {};
+
+        const transactions = await Transaction.find({
+          $or: [
+            { cost: { $regex: new RegExp(search, "i") } },
+            { userId: { $regex: new RegExp(search, "i") } },
+          ],
+        })
+          .sort(sortFormatted)
+          .skip(page * pageSize)
+          .limit(pageSize);
+    
+        const total = await Transaction.countDocuments({
+          name: { $regex: search, $options: "i" },
+        });
+    
+        res.status(200).json({
+          transactions,
+          total,
+        });
+      } catch (error) {
+        res.status(404).json({ message: error.message });
+      }
+}
+
+export const createTransaction = async (req, res) => {
+    try{
+        const userId = req.body.userId;
+        const cost = req.body.cost;
+        const planId = req.body.planId;
+
+        const transaction = await Transaction.create({
+            userId: userId,
+            cost: cost,
+            planId: planId
+        });
+
+        res.status(200).json({transaction: transaction});
+    }catch{
+        res.status(404).json({message: error.message});
+
+    }
+}
+

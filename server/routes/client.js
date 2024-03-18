@@ -7,7 +7,9 @@ import {
     deletePlan,
     createMember,
     updateMember,
-    deleteMember
+    deleteMember, 
+    getTransactions,
+    createTransaction
 } from "../controllers/client.js"
 
 const router = express.Router();
@@ -22,5 +24,8 @@ router.get("/members", getMembers);
 router.post("/members", createMember);
 router.put("/members/:id", updateMember);
 router.delete("/members/:id", deleteMember)
+
+router.get("/transactions", getTransactions);
+router.post("/transactions", createTransaction);
 
 export default router;

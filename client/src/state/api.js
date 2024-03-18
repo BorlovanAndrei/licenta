@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL}),
     reducerPath: "adminApi",
-    tagTypes: ["Plans"],
+    tagTypes: ["Plans", "Members", "Transactions"],
     endpoints: (build) => ({
         getPlans: build.query({
             query: () => "client/plans",
@@ -53,8 +53,24 @@ export const api = createApi({
                 body: updatedMemberData,
             }),
         }),
+        getTransactions: build.query({
+            query: ({ page, pageSize, sort, search }) => ({
+              url: "client/transactions",
+              method: "GET",
+              params: { page, pageSize, sort, search },
+            }),
+            providesTags: ["Transactions"],
+        }),
+        createTransaction: build.mutation({
+            query: (newTransactionData) => ({
+              url: 'client/transactions',
+              method: 'POST',
+              body: newTransactionData,
+            }),
+          }),
     }),
 });
 
 export const {useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation, 
-useGetMembersQuery, useCreateMemberMutation, useDeleteMemberMutation, useUpdateMemberMutation} = api;
+useGetMembersQuery, useCreateMemberMutation, useDeleteMemberMutation, useUpdateMemberMutation,
+useGetTransactionsQuery, useCreateTransactionMutation } = api;

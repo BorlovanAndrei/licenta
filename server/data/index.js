@@ -16,6 +16,21 @@ export const dataPlan = [
     },
 ]
 
+export const dataTransaction = [
+  {
+    _id: "63701d74f03239c72c000192",
+    userId: "63701cc1f03239c72c00017a",
+    cost: 400,
+    planId: "63701d24f03239c72c00018e"
+  },
+  {
+    _id: "63701d74f03239c72c000194",
+    userId: "63701cc1f03239c72c00017f",
+    cost: 200,
+    planId: "65f197de45797c2953c76064"
+  }
+]
+
 export const dataUser =[
   {
     _id: "63701cc1f03239c72c00017f",
