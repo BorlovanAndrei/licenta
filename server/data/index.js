@@ -16,6 +16,15 @@ export const dataPlan = [
     },
 ]
 
+export const dataEquipment =[
+  {
+    name: "test1",
+    price: 234,
+    description: "test description",
+    category: "test",
+  },
+]
+
 export const dataTransaction = [
   {
     _id: "63701d74f03239c72c000192",

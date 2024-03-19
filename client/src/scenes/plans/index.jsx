@@ -145,6 +145,7 @@ const Plan = ({
                         onChange={(e) => setEditedPlanData({ ...editedPlanData, price: e.target.value })}
                         fullWidth
                         margin="normal"
+                        type="number"
                     />
                     <TextField
                         label="Category"
@@ -257,6 +258,7 @@ const Plans = () => {
             onChange={(e) => setNewPlanData({ ...newPlanData, price: e.target.value })}
             fullWidth
             margin="normal"
+            type="number"
           />
           <TextField
             label="Category"

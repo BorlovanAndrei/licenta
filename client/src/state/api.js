@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL}),
     reducerPath: "adminApi",
-    tagTypes: ["Plans", "Members", "Transactions", "Sales"],
+    tagTypes: ["Plans", "Members", "Transactions", "Sales", "Equipments"],
     endpoints: (build) => ({
         getPlans: build.query({
             query: () => "client/plans",
@@ -73,13 +73,38 @@ export const api = createApi({
           providesTags: ["Sales"],
         }),
         getTransactionForChart: build.query({
-          query: () => "client/transactionsChart", // Update with your actual endpoint
+          query: () => "client/transactionsChart",
           providesTags: ["Transactions"],
       }),
+        getEquipments: build.query({
+          query: () => "management/equipment",
+          providesTags: ["Equipments"],
+      }),
+        createEquipment: build.mutation({
+          query: (newEquipmentData) => ({
+            url: 'management/equipment',
+            method: 'POST',
+            body: newEquipmentData,
+        }),
+      }),
+        deleteEquipment: build.mutation({
+          query: (equipmentId) => ({
+            url: `management/equipment/${equipmentId}`,
+            method: 'DELETE',
+        }),
+      }),
+        updateEquipment: build.mutation({
+          query: ({ equipmentId, ...updatedEquipmentData }) => ({
+              url: `management/equipment/${equipmentId}`,
+              method: 'PUT',
+              body: updatedEquipmentData,
+        }),
+    }),
     }),
 });
 
 export const {useGetPlansQuery, useCreatePlanMutation, useDeletePlanMutation, useUpdatePlanMutation, 
 useGetMembersQuery, useCreateMemberMutation, useDeleteMemberMutation, useUpdateMemberMutation,
 useGetTransactionsQuery, useCreateTransactionMutation,
-useGetSalesQuery, useGetTransactionForChartQuery } = api;
+useGetSalesQuery, useGetTransactionForChartQuery,
+useGetEquipmentsQuery, useCreateEquipmentMutation, useDeleteEquipmentMutation, useUpdateEquipmentMutation } = api;

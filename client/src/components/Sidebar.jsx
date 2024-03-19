@@ -84,15 +84,15 @@ const navItems = [
       icon: <PointOfSaleOutlined />,
     },
     {
-      text: "Daily",
-      icon: <TodayOutlined />,
+      text: "Expenditure",
+      icon: <PieChartOutlined />,
     },
     // {
     //   text: "Monthly",
     //   icon: <CalendarMonthOutlined />,
     // },
     {
-      text: "Breakdown",
+      text: "Revenue",
       icon: <PieChartOutlined />,
     },
     {
