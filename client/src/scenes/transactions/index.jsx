@@ -34,7 +34,7 @@ const Transactions = () => {
             const { data: createdTransaction } = await createTransactionMutation(newTransactionData);
             console.log("Transaction added:", createdTransaction);
             setIsAdding(false);
-            setNewTransactionData({ userId: "", planId: "", cost: "" }); // Reset form data
+            setNewTransactionData({ userId: "", planId: "", cost: "" });
             refetch();
         } catch (error) {
             console.error("Error adding transaction:", error);

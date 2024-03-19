@@ -16,6 +16,14 @@ export const dataPlan = [
     },
 ]
 
+export const dataOperation =[
+  {
+    cost: 200,
+    equipmentId: "65f9795227105a226c6b13da",
+    units: 2
+  },
+]
+
 export const dataEquipment =[
   {
     name: "test1",

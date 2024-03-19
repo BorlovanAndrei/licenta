@@ -11,9 +11,10 @@ import Plans from "scenes/plans";
 import Members from "scenes/members";
 import Transaction from "scenes/transactions";
 import Overview from "scenes/overview";
-import Breakdown from "scenes/breakdown";
+import Breakdown from "scenes/revenue";
 import Equipments from "scenes/equipments";
 import Expenditure from "scenes/expenditure";
+import Spendings from "scenes/spendings";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
               <Route path="/members" element={<Members/>} />
               <Route path="/transactions" element={<Transaction/>} />
               <Route path="/equipments" element={<Equipments/>} />
+              <Route path="/spendings" element={<Spendings/>} />
               <Route path="/overview" element={<Overview/>} />
               <Route path="/revenue" element={<Breakdown />} />
               <Route path="/expenditure" element={<Expenditure />} />
