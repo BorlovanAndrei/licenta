@@ -16,6 +16,16 @@ export const dataPlan = [
     },
 ]
 
+export const dataTrainer =[
+  {
+    name: "Gabriel",
+    age: 28,
+    email: "gab@gm.co",
+    phoneNumber: "0455999111",
+    address: "Pipera 6"
+  }
+]
+
 export const dataOperation =[
   {
     cost: 200,

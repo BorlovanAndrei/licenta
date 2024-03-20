@@ -18,7 +18,8 @@ import Transaction from './models/Transaction.js';
 import OverallStat from './models/OverallStats.js';
 import Equipment from './models/Equipment.js';
 import Operation from './models/Operation.js';
-import {dataPlan, dataPlanStat, dataUser, dataTransaction, dataOverallStat, dataEquipment, dataOperation} from "./data/index.js";
+import Trainer from './models/Trainers.js';
+import {dataPlan, dataPlanStat, dataUser, dataTransaction, dataOverallStat, dataEquipment, dataOperation, dataTrainer} from "./data/index.js";
 
 
 // Configurations
@@ -70,5 +71,6 @@ mongoose.connect(process.env.MONGO_URL, {
     //OverallStat.insertMany(dataOverallStat);
     //Equipment.insertMany(dataEquipment);
     //Operation.insertMany(dataOperation);
+    //Trainer.insertMany(dataTrainer);
 })
 .catch((error) => console.log(`${error} did not connect`));

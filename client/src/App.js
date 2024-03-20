@@ -15,7 +15,7 @@ import Breakdown from "scenes/revenue";
 import Equipments from "scenes/equipments";
 import Expenditure from "scenes/expenditure";
 import Spendings from "scenes/spendings";
-
+import Trainers from "scenes/trainers";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -34,6 +34,7 @@ function App() {
               <Route path="/transactions" element={<Transaction/>} />
               <Route path="/equipments" element={<Equipments/>} />
               <Route path="/spendings" element={<Spendings/>} />
+              <Route path="/trainers" element={<Trainers/>} />
               <Route path="/overview" element={<Overview/>} />
               <Route path="/revenue" element={<Breakdown />} />
               <Route path="/expenditure" element={<Expenditure />} />

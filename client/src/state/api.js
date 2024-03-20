@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL}),
     reducerPath: "adminApi",
-    tagTypes: ["Plans", "Members", "Transactions", "Sales", "Equipments", "Operations"],
+    tagTypes: ["Plans", "Members", "Transactions", "Sales", "Equipments", "Operations", "Trainers"],
     endpoints: (build) => ({
         getPlans: build.query({
             query: () => "client/plans",
@@ -119,6 +119,30 @@ export const api = createApi({
           query: () => "management/operationsChart",
           providesTags: ["Operations"],
       }),
+      getTrainers: build.query({
+        query: () => "general/trainers",
+        providesTags: ["Trainers"],
+      }),
+      createTrainer: build.mutation({
+        query: (newTrainerData) => ({
+          url: 'general/trainers',
+          method: 'POST',
+          body: newTrainerData,
+        }),
+      }),
+      deleteTrainer: build.mutation({
+        query: (trainerId) => ({
+            url: `general/trainers/${trainerId}`,
+            method: 'DELETE',
+        }),
+      }),
+      updateTrainer: build.mutation({
+        query: ({ trainerId, ...updatedTrainerData }) => ({
+            url: `general/trainers/${trainerId}`,
+            method: 'PUT',
+            body: updatedTrainerData,
+        }),
+      }),
 
     }),
 });
@@ -128,4 +152,5 @@ useGetMembersQuery, useCreateMemberMutation, useDeleteMemberMutation, useUpdateM
 useGetTransactionsQuery, useCreateTransactionMutation,
 useGetSalesQuery, useGetTransactionForChartQuery,
 useGetEquipmentsQuery, useCreateEquipmentMutation, useDeleteEquipmentMutation, useUpdateEquipmentMutation,
-useGetOperationsQuery, useCreateOperationMutation, useGetOperationForChartQuery} = api;
+useGetOperationsQuery, useCreateOperationMutation, useGetOperationForChartQuery,
+useGetTrainersQuery, useCreateTrainerMutation, useDeleteTrainerMutation, useUpdateTrainerMutation,} = api;
