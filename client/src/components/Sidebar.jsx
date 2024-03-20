@@ -29,6 +29,7 @@ import {
     PieChartOutlined,
     BorderClear,
   } from "@mui/icons-material";
+import PieChartIcon from '@mui/icons-material/PieChart';
 import EventIcon from '@mui/icons-material/Event';
 import PeopleIcon from '@mui/icons-material/People';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
@@ -85,12 +86,8 @@ const navItems = [
     },
     {
       text: "Expenditure",
-      icon: <PieChartOutlined />,
+      icon: <PieChartIcon />,
     },
-    // {
-    //   text: "Monthly",
-    //   icon: <CalendarMonthOutlined />,
-    // },
     {
       text: "Revenue",
       icon: <PieChartOutlined />,
