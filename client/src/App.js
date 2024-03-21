@@ -15,6 +15,8 @@ import Equipments from 'scenes/equipments';
 import Expenditure from 'scenes/expenditure';
 import Spendings from 'scenes/spendings';
 import Trainers from 'scenes/trainers';
+import Login from 'scenes/login';
+import RequireAuth from 'components/RequireAuth';
 
 function App() {
     const mode = useSelector((state) => state.global.mode);
@@ -26,20 +28,20 @@ function App() {
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
                     <Routes>
+                        <Route path="/login" element={<Login/>} />
                         <Route element={<Layout />}>
-                            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
-                            <Route path="/plans" element={<Plans />} />
-                            <Route path="/members" element={<Members />} />
-                            <Route path="/transactions" element={<Transaction />} />
-                            <Route path="/equipments" element={<Equipments />} />
-                            <Route path="/spendings" element={<Spendings />} />
-                            <Route path="/trainers" element={<Trainers />} />
-                            <Route path="/overview" element={<Overview />} />
-                            <Route path="/revenue" element={<Breakdown />} />
-                            <Route path="/expenditure" element={<Expenditure />} />
-                            <Route path="/:searchQuery" element={<Navigate to="/dashboard" replace />} />
-                        </Route>
+                        <Route path="dashboard" index element={<RequireAuth><Dashboard/></RequireAuth>} />
+                                <Route path="/plans" element={<RequireAuth><Plans /></RequireAuth> } />
+                                <Route path="/members" element={<RequireAuth><Members /></RequireAuth>} />
+                                <Route path="/transactions" element={<RequireAuth><Transaction /></RequireAuth>} />
+                                <Route path="/equipments" element={<RequireAuth><Equipments /></RequireAuth>} />
+                                <Route path="/spendings" element={<RequireAuth><Spendings /></RequireAuth>} />
+                                <Route path="/trainers" element={<RequireAuth><Trainers /></RequireAuth>} />
+                                <Route path="/overview" element={<RequireAuth><Overview /></RequireAuth>} />
+                                <Route path="/revenue" element={<RequireAuth><Breakdown /></RequireAuth>} />
+                                <Route path="/expenditure" element={<RequireAuth><Expenditure /></RequireAuth>} />
+                                <Route path="/:searchQuery" element={<Navigate to="/dashboard" replace />} />
+                            </Route>
                     </Routes>
                 </ThemeProvider>
             </BrowserRouter>
@@ -48,3 +50,7 @@ function App() {
 }
 
 export default App;
+
+
+// App.js
+

@@ -7,6 +7,9 @@ import globalReducer from "state";
 import { Provider } from 'react-redux';
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "state/api";
+import axios from "axios"
+
+axios.defaults.baseURL = 'http://localhost:5001';
 
 
 // const store = configureStore({

@@ -143,6 +143,13 @@ export const api = createApi({
             body: updatedTrainerData,
         }),
       }),
+      login: build.mutation({
+        query: ({ email, password }) => ({
+          url: '/general/login',
+          method: 'POST',
+          body: { email, password },
+        }),
+      }),
 
     }),
 });
@@ -153,4 +160,5 @@ useGetTransactionsQuery, useCreateTransactionMutation,
 useGetSalesQuery, useGetTransactionForChartQuery,
 useGetEquipmentsQuery, useCreateEquipmentMutation, useDeleteEquipmentMutation, useUpdateEquipmentMutation,
 useGetOperationsQuery, useCreateOperationMutation, useGetOperationForChartQuery,
-useGetTrainersQuery, useCreateTrainerMutation, useDeleteTrainerMutation, useUpdateTrainerMutation,} = api;
+useGetTrainersQuery, useCreateTrainerMutation, useDeleteTrainerMutation, useUpdateTrainerMutation,
+useLoginMutation} = api;
