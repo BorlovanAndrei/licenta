@@ -37,6 +37,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
+import authStore from '../store/authStore';
 
 
 const navItems = [
@@ -97,7 +98,7 @@ const navItems = [
         icon: null,
     },
     {
-        text: "Log out",
+        text: "Logout",
         icon: <LogoutIcon />,
     }
   ];
@@ -206,3 +207,4 @@ const Sidebar = ({
 }
 
 export default Sidebar
+

@@ -46,6 +46,17 @@ const authStore = create((set) => ({
             set({ loggedIn: false});
         }
 
+    },
+
+    logout: async () =>{
+        try{
+            await axios.get("/general/logout", {withCredentials: true});
+            set({ loggedIn: false});
+            window.location.href = '/login';
+        }catch(error){
+            console.log(error);
+        }
+        
     }
 
 }));

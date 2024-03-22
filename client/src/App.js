@@ -17,6 +17,7 @@ import Spendings from 'scenes/spendings';
 import Trainers from 'scenes/trainers';
 import Login from 'scenes/login';
 import RequireAuth from 'components/RequireAuth';
+import Logout from 'scenes/logout';
 
 function App() {
     const mode = useSelector((state) => state.global.mode);
@@ -28,6 +29,7 @@ function App() {
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
                     <Routes>
+                        <Route path="/" element={<Navigate to="/login" replace />} />s
                         <Route path="/login" element={<Login/>} />
                         <Route element={<Layout />}>
                         <Route path="dashboard" index element={<RequireAuth><Dashboard/></RequireAuth>} />
@@ -40,6 +42,7 @@ function App() {
                                 <Route path="/overview" element={<RequireAuth><Overview /></RequireAuth>} />
                                 <Route path="/revenue" element={<RequireAuth><Breakdown /></RequireAuth>} />
                                 <Route path="/expenditure" element={<RequireAuth><Expenditure /></RequireAuth>} />
+                                <Route path="/logout" element={<RequireAuth><Logout /></RequireAuth>} />
                                 <Route path="/:searchQuery" element={<Navigate to="/dashboard" replace />} />
                             </Route>
                     </Routes>
@@ -51,6 +54,4 @@ function App() {
 
 export default App;
 
-
-// App.js
 
