@@ -6,7 +6,11 @@ import {
     deleteTrainer,
     signUp,
     logIn,
-    logOut
+    logOut,
+    createClass,
+    editClass,
+    deleteClasses,
+    getClasses
 } from "../controllers/general.js"
 
 
@@ -17,7 +21,13 @@ router.post("/trainers", createTrainer);
 router.put("/trainers/:id", updateTrainer);
 router.delete("/trainers/:id", deleteTrainer);
 
+router.get("/classes", getClasses);
+router.post("/classes", createClass);
+router.put("/classes/:id", editClass);
+router.delete("/classes/:id", deleteClasses)
+
 router.post("/signup", signUp);
 router.post("/login", logIn);
 router.get("/logout", logOut);
+
 export default router;

@@ -26,7 +26,6 @@ const Plan = ({
     const theme = useTheme();
     const [isExpended, setIsExpended] = useState(false);
 
-    //here
     const {refetch} = useGetPlansQuery();
     const [isEditing, setIsEditing] = useState(false);
     const [deletePlan] = useDeletePlanMutation();

@@ -2,6 +2,7 @@ import Trainer from "../models/Trainers.js";
 import Admin from "../models/Admin.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Classes from "../models/Classes.js";
 
 
 export const getTrainers = async (req, res) => {
@@ -137,3 +138,49 @@ export const checkAuth =  function checkAuth(req, res) {
         res.status(404).json({message: error.message});
     }
   }
+
+
+
+  //Classes
+  export const getClasses = async (req, res) => {
+    try {
+      const classes = await Classes.find();
+      res.status(200).json(classes);
+    } catch (error) {
+      res.status(404).json({ error: "Failed to fetch classes from the database" });
+    }
+  };
+
+export const createClass = async (req, res) =>{
+  try {
+    const newClass = await Classes.create(req.body);
+    res.status(200).json(newClass);
+  } catch (err) {
+    res.status(404).json({ error: "Failed to create class" });
+  }
+}
+
+export const editClass = async (req, res) =>{
+  const { id } = req.params;
+  try {
+    const updatedClass = await Classes.findByIdAndUpdate(id, req.body, { new: true });
+    if (!updatedClass) {
+      return res.status(404).json({ error: "Classes not found" });
+    }
+    res.status(200).json(updatedClass);
+  } catch (error) {
+    console.error(err);
+    res.status(404).json({ error: "Failed to edit class" });
+  }
+}
+
+export const deleteClasses = async (req, res) =>{
+    
+  try {
+      const classesId = req.params.id;
+      await Classes.deleteOne({ _id: classesId });
+      res.status(200).json({ success: "Record deleted" });
+  } catch (error) {
+      res.status(404).json({ error: "Failed to delete record" });
+  }
+};

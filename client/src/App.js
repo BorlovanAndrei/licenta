@@ -18,6 +18,7 @@ import Trainers from 'scenes/trainers';
 import Login from 'scenes/login';
 import RequireAuth from 'components/RequireAuth';
 import Logout from 'scenes/logout';
+import Classes from 'scenes/classes';
 
 function App() {
     const mode = useSelector((state) => state.global.mode);
@@ -39,6 +40,7 @@ function App() {
                                 <Route path="/equipments" element={<RequireAuth><Equipments /></RequireAuth>} />
                                 <Route path="/spendings" element={<RequireAuth><Spendings /></RequireAuth>} />
                                 <Route path="/trainers" element={<RequireAuth><Trainers /></RequireAuth>} />
+                                <Route path="/classes" element={<RequireAuth><Classes /></RequireAuth>} />
                                 <Route path="/overview" element={<RequireAuth><Overview /></RequireAuth>} />
                                 <Route path="/revenue" element={<RequireAuth><Breakdown /></RequireAuth>} />
                                 <Route path="/expenditure" element={<RequireAuth><Expenditure /></RequireAuth>} />
