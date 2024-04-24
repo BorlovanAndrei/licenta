@@ -152,13 +152,35 @@ export const checkAuth =  function checkAuth(req, res) {
   };
 
 export const createClass = async (req, res) =>{
-  try {
+   try {
     const newClass = await Classes.create(req.body);
     res.status(200).json(newClass);
   } catch (err) {
     res.status(404).json({ error: "Failed to create class" });
   }
+
+//   try{
+//     const title = req.body.title;
+//     const description = req.body.description;
+//     const start = req.body.start;
+//     const end = req.body.end;
+//     const trainerId = req.body.trainerId;
+
+//     const classes = await Classes.create({
+//         title: title,
+//         description: description,
+//         start: start,
+//         end: end,
+//         trainerId: trainerId,
+//     });
+
+//     res.status(200).json({classes: classes});
+// }catch(error){
+//     res.status(404).json({message: error.message});
+
+// }
 }
+
 
 export const editClass = async (req, res) =>{
   const { id } = req.params;

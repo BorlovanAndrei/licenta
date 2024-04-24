@@ -17,9 +17,13 @@ import {
   DialogContent,
   TextField,
   Button,
+  MenuItem, 
 } from "@mui/material";
 import Header from "components/Header";
-import { useGetClassesQuery, useCreateClassMutation, useDeleteClassMutation, useUpdateClassMutation } from "state/api";
+import { useGetClassesQuery, useCreateClassMutation, useDeleteClassMutation, useUpdateClassMutation, useGetTrainersQuery } from "state/api";
+
+
+
 
 const Calendar = () => {
   const theme = useTheme();
@@ -39,11 +43,13 @@ const Calendar = () => {
     title: "",
     start: "",
     end: "",
-    trainerId: "",
+    trainerId: "", 
     description: "",
   });
 
   const { data: classesData, refetch } = useGetClassesQuery();
+  const { data: trainersData } = useGetTrainersQuery(); 
+
   useEffect(() => {
     if (classesData) {
       setCurrentEvents(classesData.map(formatClassToEvent).filter(event => event !== null));
@@ -81,26 +87,32 @@ const Calendar = () => {
       title: "",
       start: "",
       end: "",
-      trainerId: "",
+      trainerId: "", 
       description: "",
     });
   };
 
   const handleAddClass = async () => {
-    console.log("Adding class...");
+    console.log("Adding class...", newClassData);
     try {
+      // if (!newClassData.trainerId) {
+      //   console.error("Trainer ID is required.");
+      //   return;
+      // }else{
+      //   console.error(newClassData.trainerId);
+      // }
+  
       const { data } = await createClassMutation(newClassData).unwrap();
-
+  
       if (data) {
         setCurrentEvents([...currentEvents, formatClassToEvent(data)]);
       }
       handleCloseAddClassDialog();
-      refetch(); 
+      refetch();
     } catch (error) {
       console.error("Failed to create class:", error);
     }
   };
- 
 
   const handleDeleteClass = async (eventId) => {
     try {
@@ -112,6 +124,12 @@ const Calendar = () => {
     }
   };
 
+  const handleTrainerSelect = (event) => {
+    setNewClassData({
+      ...newClassData,
+      trainerId: event.target.value, 
+    });
+  };
 
   const calendarStyles = {
     '--fc-border-color': colors.primary[400],
@@ -149,7 +167,6 @@ const Calendar = () => {
       title: "",
       start: "",
       end: "",
-      trainerId: "",
       description: "",
     });
   };
@@ -254,64 +271,106 @@ const Calendar = () => {
         <DialogTitle>Add New Class</DialogTitle>
         <DialogContent>
           <TextField
+            autoFocus
+            margin="dense"
+            id="title"
             label="Title"
+            type="text"
+            fullWidth
             value={newClassData.title}
-            onChange={(e) => setNewClassData({ ...newClassData, title: e.target.value })}
-            fullWidth
-            margin="normal"
+            onChange={(e) =>
+              setNewClassData({ ...newClassData, title: e.target.value })
+            }
           />
           <TextField
+            margin="dense"
+            id="description"
             label="Description"
-            value={newClassData.description}
-            onChange={(e) => setNewClassData({ ...newClassData, description: e.target.value })}
+            type="text"
             fullWidth
-            margin="normal"
+            value={newClassData.description}
+            onChange={(e) =>
+              setNewClassData({ ...newClassData, description: e.target.value })
+            }
           />
           <TextField
-            label="TrainerId"
-            value={newClassData.trainerId}
-            onChange={(e) => setNewClassData({ ...newClassData, trainerId: e.target.value })}
+            margin="dense"
+            id="trainer"
+            label="Trainer"
+            select
             fullWidth
-            margin="normal"
-          />
-          <Button onClick={handleAddClass} variant="contained" color="primary">
-            Add Class
-          </Button>
-
+            value={newClassData.trainerId}
+            onChange={handleTrainerSelect}
+          >
+            {trainersData && trainersData.map((trainer) => (
+              <MenuItem key={trainer._id} value={trainer._id}>
+                {trainer.name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Box display="flex" justifyContent="flex-end" mt={2}>
+            <Button onClick={handleCloseAddClassDialog} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleAddClass} color="primary">
+              Add
+            </Button>
+          </Box>
         </DialogContent>
       </Dialog>
 
+      {/* Edit Class Dialog */}
       <Dialog open={isEditClassDialogOpen} onClose={handleCloseEditClassDialog}>
         <DialogTitle>Edit Class</DialogTitle>
         <DialogContent>
           <TextField
+            autoFocus
+            margin="dense"
+            id="title"
             label="Title"
+            type="text"
+            fullWidth
             value={newClassData.title}
-            onChange={(e) => setNewClassData({ ...newClassData, title: e.target.value })}
-            fullWidth
-            margin="normal"
+            onChange={(e) =>
+              setNewClassData({ ...newClassData, title: e.target.value })
+            }
           />
           <TextField
+            margin="dense"
+            id="description"
             label="Description"
-            value={newClassData.description}
-            onChange={(e) => setNewClassData({ ...newClassData, description: e.target.value })}
+            type="text"
             fullWidth
-            margin="normal"
+            value={newClassData.description}
+            onChange={(e) =>
+              setNewClassData({ ...newClassData, description: e.target.value })
+            }
           />
           <TextField
-            label="TrainerId"
-            value={newClassData.trainerId}
-            onChange={(e) => setNewClassData({ ...newClassData, trainerId: e.target.value })}
+            margin="dense"
+            id="trainer"
+            label="Trainer"
+            select
             fullWidth
-            margin="normal"
-          />
-          <Button onClick={handleUpdateClass} variant="contained" color="primary">
-            Update Class
-          </Button>
+            value={newClassData.trainerId}
+            onChange={handleTrainerSelect}
+          >
+            {trainersData && trainersData.map((trainer) => (
+              <MenuItem key={trainer._id} value={trainer._id}>
+                {trainer.name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Box display="flex" justifyContent="flex-end" mt={2}>
+            <Button onClick={handleCloseEditClassDialog} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleUpdateClass} color="primary">
+              Update
+            </Button>
+          </Box>
         </DialogContent>
       </Dialog>
-
-
     </Box>
   );
 };
