@@ -144,40 +144,46 @@ export const deleteMember = async (req, res) =>{
 
 export const getTransactions = async (req, res) => {
     try {
-        const { page = 1, pageSize = 20, sort = null, search = "" } = req.query;
-    
+        const { page = 0, pageSize = 20, sort = null, search = "" } = req.query;
+
+        const pageNumber = parseInt(page, 10);
+        const pageSizeNumber = parseInt(pageSize, 10);
+
         const generateSort = () => {
-          const sortParsed = JSON.parse(sort);
-          const sortFormatted = {
-            [sortParsed.field]: (sortParsed.sort = "asc" ? 1 : -1),
-          };
-    
-          return sortFormatted;
+            const sortParsed = JSON.parse(sort);
+            return {
+                [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
+            };
         };
         const sortFormatted = Boolean(sort) ? generateSort() : {};
 
-        const transactions = await Transaction.find({
-          $or: [
-            { cost: { $regex: new RegExp(search, "i") } },
-            { userId: { $regex: new RegExp(search, "i") } },
-          ],
-        })
-          .sort(sortFormatted)
-          .skip(page * pageSize)
-          .limit(pageSize);
-    
-        const total = await Transaction.countDocuments({
-          name: { $regex: search, $options: "i" },
-        });
-    
+        const searchConditions = search
+            ? {
+                $or: [
+                    { cost: { $regex: new RegExp(search, "i") } },
+                    { userId: { $regex: new RegExp(search, "i") } },
+                ],
+            }
+            : {};
+
+        const transactions = await Transaction.find(searchConditions)
+            .sort(sortFormatted)
+            .skip(pageNumber * pageSizeNumber)
+            .limit(pageSizeNumber);
+
+        const total = await Transaction.countDocuments(searchConditions);
+
         res.status(200).json({
-          transactions,
-          total,
+            transactions,
+            total,
         });
-      } catch (error) {
+    } catch (error) {
         res.status(404).json({ message: error.message });
-      }
-}
+    }
+};
+
+
+
 
 export const getTransactionForChart = async (req, res) => {
     try{
@@ -206,4 +212,5 @@ export const createTransaction = async (req, res) => {
 
     }
 }
+
 

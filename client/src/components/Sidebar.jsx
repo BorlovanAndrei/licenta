@@ -1,7 +1,6 @@
 import React from 'react'
 import {
-    Box, 
-    Divider,
+    Box,
     Drawer,
     IconButton,
     List,
@@ -13,21 +12,13 @@ import {
     useTheme
 } from "@mui/material";
 import {
-    SettingsOutlined,
     ChevronLeft,
     ChevronRightOutlined,
     HomeOutlined,
     ShoppingCartOutlined,
     Groups2Outlined,
     ReceiptLongOutlined,
-    PublicOutlined,
-    PointOfSaleOutlined,
-    TodayOutlined,
-    CalendarMonthOutlined,
-    AdminPanelSettingsOutlined,
-    TrendingUpOutlined,
     PieChartOutlined,
-    BorderClear,
   } from "@mui/icons-material";
 import PieChartIcon from '@mui/icons-material/PieChart';
 import EventIcon from '@mui/icons-material/Event';
@@ -37,7 +28,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
-import authStore from '../store/authStore';
+
 
 
 const navItems = [
@@ -80,10 +71,6 @@ const navItems = [
     {
       text: "Sales & Spendings",
       icon: null,
-    },
-    {
-      text: "Overview",
-      icon: <PointOfSaleOutlined />,
     },
     {
       text: "Expenditure",

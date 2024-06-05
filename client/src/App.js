@@ -9,7 +9,6 @@ import Dashboard from 'scenes/dashboard';
 import Plans from 'scenes/plans';
 import Members from 'scenes/members';
 import Transaction from 'scenes/transactions';
-import Overview from 'scenes/overview';
 import Breakdown from 'scenes/revenue';
 import Equipments from 'scenes/equipments';
 import Expenditure from 'scenes/expenditure';
@@ -41,7 +40,6 @@ function App() {
                                 <Route path="/spendings" element={<RequireAuth><Spendings /></RequireAuth>} />
                                 <Route path="/trainers" element={<RequireAuth><Trainers /></RequireAuth>} />
                                 <Route path="/classes" element={<RequireAuth><Classes /></RequireAuth>} />
-                                <Route path="/overview" element={<RequireAuth><Overview /></RequireAuth>} />
                                 <Route path="/revenue" element={<RequireAuth><Breakdown /></RequireAuth>} />
                                 <Route path="/expenditure" element={<RequireAuth><Expenditure /></RequireAuth>} />
                                 <Route path="/logout" element={<RequireAuth><Logout /></RequireAuth>} />

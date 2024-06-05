@@ -4,6 +4,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { useGetEquipmentsQuery } from "state/api";
 import { useGetOperationForChartQuery } from "state/api";
 
+
 const EquipmentBreakdownChart = ({ isDashboard = false }) => {
   const theme = useTheme();
   const { data: equipments, isLoading: equipmentsLoading } = useGetEquipmentsQuery();

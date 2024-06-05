@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Box, useTheme, Modal, Typography, TextField, Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, useTheme, Modal, Typography, TextField, Button, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useGetOperationsQuery, useCreateOperationMutation } from "state/api";
+import { useGetOperationsQuery, useCreateOperationMutation, useGetEquipmentsQuery } from "state/api";
 import Header from "components/Header";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 
@@ -19,7 +19,7 @@ const Operations = () => {
         sort: JSON.stringify(sort),
         search,
     });
-    console.log("data", data);
+    const { data: equipmentData, isLoading: equipmentLoading } = useGetEquipmentsQuery();
 
     const [isAdding, setIsAdding] = useState(false);
     const [newOperationData, setNewOperationData] = useState({
@@ -39,6 +39,16 @@ const Operations = () => {
         } catch (error) {
             console.error("Error adding operation:", error);
         }
+    };
+
+    const handleEquipmentChange = (event) => {
+        const selectedEquipmentId = event.target.value;
+        const selectedEquipment = equipmentData.find(equipment => equipment._id === selectedEquipmentId);
+        setNewOperationData({
+            ...newOperationData,
+            equipmentId: selectedEquipmentId,
+            cost: selectedEquipment.price.toString(),
+        });
     };
 
     const columns = [
@@ -79,13 +89,19 @@ const Operations = () => {
             <Modal open={isAdding} onClose={() => setIsAdding(false)}>
                 <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, maxWidth: '80vw' }}>
                     <Typography variant="h6" gutterBottom>Add Operation</Typography>
-                    <TextField
-                        label="Equipment ID"
-                        value={newOperationData.equipmentId}
-                        onChange={(e) => setNewOperationData({ ...newOperationData, equipmentId: e.target.value })}
-                        fullWidth
-                        margin="normal"
-                    />
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel>Equipment</InputLabel>
+                        <Select
+                            value={newOperationData.equipmentId}
+                            onChange={handleEquipmentChange}
+                        >
+                            {equipmentData && equipmentData.map((equipment) => (
+                                <MenuItem key={equipment._id} value={equipment._id}>
+                                    {equipment.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <TextField
                         label="Cost"
                         value={newOperationData.cost}
@@ -157,3 +173,4 @@ const Operations = () => {
 }
 
 export default Operations;
+
