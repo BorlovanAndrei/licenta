@@ -7,18 +7,6 @@ import User from "../models/User.js";
 export const getPlans = async (req, res) =>{
     try{
         const plans = await Plan.find();
-
-        // const plansWithStats = await Promise.all(
-        //     plans.map(async (plan) =>{
-        //         const stat = await PlanStat.find({
-        //             planId: plan._id
-        //         });
-        //         return{
-        //             ...plan._doc,
-        //             stat,
-        //         };
-        //     })
-        // );
         res.status(200).json(plans);
     }catch{
         res.status(404).json({message: error.message});
@@ -88,7 +76,7 @@ export const deletePlan = async (req, res) =>{
 
 export const getMembers = async (req, res) => {
     try{
-        const customers = await User.find().select("-password");
+        const customers = await User.find();
         res.status(200).json(customers);
     }catch(error){
         res.status(404).json({message: error.message});
@@ -102,16 +90,12 @@ export const createMember = async (req, res) => {
         const email = req.body.email;
         const phoneNumber = req.body.phoneNumber;
         const address = req.body.address;
-        const transactions = req.body.transactions;
-        const password = req.body.password;
 
         const member = await User.create({
             name: name,
             email: email,
-            password: password,
             phoneNumber: phoneNumber,
             address: address,
-            transactions: transactions
         });
 
         res.status(200).json({member: member});
@@ -125,14 +109,13 @@ export const updateMember = async (req, res) => {
     try{
         const memberId = req.params.id;
 
-        const {name, email, phoneNumber, address, transactions} = req.body;
+        const {name, email, phoneNumber, address} = req.body;
 
         await User.findByIdAndUpdate(memberId, {
             name,
             email,
             phoneNumber,
             address,
-            transactions
         });
 
         const member = await User.findById(memberId);

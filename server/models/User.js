@@ -4,14 +4,8 @@ const UserSchema = new mongoose.Schema(
   {
     name: String,
     email: String,
-    password: {
-        type: String,
-        required: true,
-        min: 5,
-      },
     phoneNumber: String,
-    address: String,
-    transactions: Array,
+    address: String
   },
   { timestamps: true }
 );
