@@ -8,6 +8,8 @@ const authStore = create((set) => ({
         email: "",
         password: "",
     },
+    errorMessage: "",
+    showError: false,
 
     updateLoginForm: (e) => {
         const {name, value} = e.target
@@ -31,6 +33,12 @@ const authStore = create((set) => ({
             set({loggedIn: true});
             console.log(res);
         }catch(error){
+            set({
+                loggedIn: false,
+                errorMessage: "Invalid email or password",
+                showError: true
+            });
+
             console.log(error);
         }
             
@@ -57,7 +65,10 @@ const authStore = create((set) => ({
             console.log(error);
         }
         
-    }
+    },
+
+    
+    hideError: () => set({ showError: false})
 
 }));
 
