@@ -198,7 +198,7 @@ const Dashboard = () => {
               { field: 'id', headerName: 'ID', flex: 1 },
               { field: 'name', headerName: 'Name', flex: 1 },
               { field: 'email', headerName: 'Email', flex: 1 },
-              { field: 'phone', headerName: 'Phone', flex: 1 },
+              { field: 'phoneNumber', headerName: 'Phone', flex: 1 },
               { field: 'address', headerName: 'Address', flex: 1 }
             ]}
             autoHeight
