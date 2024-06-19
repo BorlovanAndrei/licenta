@@ -192,7 +192,7 @@ const Members = () => {
       <Box m="1.5rem 2.5rem">
         <Header title="MEMBERS" subtitle="List of Members" />
 
-        <Button variant="contained" onClick={() => setIsAddingMember(true)} style={{ color: 'white' }}>
+        <Button variant="contained" onClick={() => setIsAddingMember(true)} style={{ color: theme.palette.secondary[100] }}>
           Add Member
         </Button>
 

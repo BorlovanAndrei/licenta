@@ -155,7 +155,7 @@ const Trainers = () => {
     <Box m="1.5rem 2.5rem">
         <Header title="TRAINERS" subtitle={"List of Trainers"}/>
 
-        <Button variant="contained" onClick={() => setIsAddingTrainer(true)}>
+        <Button variant="contained" sx={{color: theme.palette.secondary[100]}} onClick={() => setIsAddingTrainer(true)}>
         Add Trainer
       </Button>
 

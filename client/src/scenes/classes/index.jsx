@@ -239,7 +239,7 @@ const Calendar = () => {
             headerToolbar={{
               left: "prev,next today",
               center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+              right: "timeGridWeek",
             }}
             initialView="dayGridMonth"
             editable={true}
@@ -376,3 +376,4 @@ const Calendar = () => {
 };
 
 export default Calendar;
+

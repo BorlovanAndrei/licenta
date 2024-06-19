@@ -88,11 +88,6 @@ const Equipments = () => {
             headerName: "Price",
             flex: 0.5,
         },
-        // {
-        //     field: "description",
-        //     headerName: "Description",
-        //     flex: 0.5,
-        // },
         {
             field: "category",
             headerName: "Category",
@@ -138,7 +133,7 @@ const Equipments = () => {
         <Box m="1.5rem 2.5rem">
             <Header title="EQUIPMENTS" subtitle={"List of Equipments"} />
 
-            <Button variant="contained" onClick={() => setIsAddingEquipment(true)}>
+            <Button variant="contained" sx={{color: theme.palette.secondary[100]}} onClick={() => setIsAddingEquipment(true)}>
                 Add Equipment
             </Button>
 

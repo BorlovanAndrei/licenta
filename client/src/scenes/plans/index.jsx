@@ -60,7 +60,6 @@ const Plan = ({
       }
   };
 
-  //untill here
 
     return(
         <Card 
@@ -159,7 +158,7 @@ const Plan = ({
         </Card>
     )
 }
-//
+
 
 const Plans = () => {
     const {data, isLoading, refetch} = useGetPlansQuery();
@@ -190,10 +189,11 @@ const Plans = () => {
       console.error("Failed to add plan:", error);
     }
   };
+  const theme = useTheme();
 
 
   return <Box m="1.5rem 2.5rem">
-        <Button variant="contained" sx={{color: "white"}} onClick={() => setIsAddingPlan(true)}>
+        <Button variant="contained" sx={{color: theme.palette.secondary[100]}} onClick={() => setIsAddingPlan(true)}>
         Add New Plan
       </Button>
     <Header title="PLANS" subtitle="See all the plans!" />
@@ -276,3 +276,4 @@ const Plans = () => {
 }
 
 export default Plans
+

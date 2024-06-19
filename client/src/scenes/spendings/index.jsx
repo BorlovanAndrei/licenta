@@ -84,7 +84,7 @@ const Operations = () => {
         <Box m="1.5rem 2.5rem">
             <Header title="OPERATIONS" subtitle="Entire list of operations" />
 
-            <Button variant="contained" onClick={() => setIsAdding(true)}>Add Operation</Button>
+            <Button variant="contained" sx={{color: theme.palette.secondary[100]}} onClick={() => setIsAdding(true)}>Add Operation</Button>
 
             <Modal open={isAdding} onClose={() => setIsAdding(false)}>
                 <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, maxWidth: '80vw' }}>
