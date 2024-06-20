@@ -131,7 +131,7 @@ const Equipments = () => {
 
     return (
         <Box m="1.5rem 2.5rem">
-            <Header title="EQUIPMENTS" subtitle={"List of Equipments"} />
+            <Header title="EQUIPMENT" subtitle={"List of Equipment"} />
 
             <Button variant="contained" sx={{color: theme.palette.secondary[100]}} onClick={() => setIsAddingEquipment(true)}>
                 Add Equipment
