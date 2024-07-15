@@ -115,6 +115,7 @@ const Operations = () => {
                         onChange={(e) => setNewOperationData({ ...newOperationData, units: e.target.value })}
                         fullWidth
                         margin="normal"
+                        type="number"
                     />
                     <Button variant="contained" onClick={handleAddOperation}>Add Operation</Button>
                 </Box>

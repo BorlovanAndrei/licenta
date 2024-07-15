@@ -11,6 +11,11 @@ const Members = () => {
     const [isAddingMember, setIsAddingMember] = useState(false);
     const [isEditingMember, setIsEditingMember] = useState(false);
     const [isAddingTransaction, setIsAddingTransaction] = useState(false);
+    const [emailError, setEmailError] = useState('');
+    const [editEmailError, setEditEmailError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
+    const [editPhoneError, setEditPhoneError] = useState('');
+
     const [newMemberData, setNewMemberData] = useState({
       name: '',
       email: '',
@@ -104,6 +109,64 @@ const Members = () => {
         cost: selectedPlan.price
       });
     };
+
+    
+    const handleEmailChange = (e) => {
+      const email = e.target.value;
+      setNewMemberData({ ...newMemberData, email });
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setEmailError('Format must be: a@a.a ');
+      } else {
+        setEmailError('');
+      }
+    };
+
+
+    const handleEditMemberEmailChange = (e) => {
+      const email = e.target.value;
+      setEditMemberData({ ...editMemberData, email });
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setEditEmailError('Format must be: a@a.a ');
+      } else {
+        setEditEmailError('');
+      }
+    };
+
+    const handlePhoneNumberChange = (e) => {
+      const phoneNumber = e.target.value;
+      setNewMemberData({ ...newMemberData, phoneNumber });
+
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phoneNumber)) {
+        setPhoneError('Phone number must be exactly 10 digits');
+      } else {
+        setPhoneError('');
+      }
+    };
+
+    const handleEditPhoneNumberChange = (e) => {
+      const phoneNumber = e.target.value;
+      setEditMemberData({ ...editMemberData, phoneNumber });
+
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phoneNumber)) {
+        setEditPhoneError('Phone number must be exactly 10 digits');
+      } else {
+        setEditPhoneError('');
+      }
+    };
+
+
+    const handleKeyPress = (e) => {
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+    };
+
 
     const columns = [
         {
@@ -255,14 +318,20 @@ const Members = () => {
             <TextField
               label="Email"
               value={newMemberData.email}
-              onChange={(e) => setNewMemberData({ ...newMemberData, email: e.target.value })}
+              onChange={handleEmailChange}
+              error={Boolean(emailError)}
+              helperText={emailError}
               fullWidth
               margin="normal"
             />
             <TextField
               label="Phone Number"
               value={newMemberData.phoneNumber}
-              onChange={(e) => setNewMemberData({ ...newMemberData, phoneNumber: e.target.value })}
+              onChange={handlePhoneNumberChange}
+              error={Boolean(phoneError)}
+              helperText={phoneError}
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+              onKeyPress={handleKeyPress}
               fullWidth
               margin="normal"
             />
@@ -302,14 +371,20 @@ const Members = () => {
               <TextField
                   label="Email"
                   value={editMemberData.email}
-                  onChange={(e) => setEditMemberData({ ...editMemberData, email: e.target.value })}
+                  onChange={handleEditMemberEmailChange}
+                  error={Boolean(editEmailError)}
+                  helperText={editEmailError}
                   fullWidth
                   margin="normal"
               />
               <TextField
                   label="Phone Number"
                   value={editMemberData.phoneNumber}
-                  onChange={(e) => setEditMemberData({ ...editMemberData, phoneNumber: e.target.value })}
+                  onChange={handleEditPhoneNumberChange}
+                  error={Boolean(editPhoneError)}
+                  helperText={editPhoneError}
+                  inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                  onKeyPress={handleKeyPress}
                   fullWidth
                   margin="normal"
               />

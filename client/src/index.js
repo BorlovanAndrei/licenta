@@ -12,13 +12,6 @@ import axios from "axios"
 axios.defaults.baseURL = 'http://localhost:5001';
 
 
-// const store = configureStore({
-//   reducer: {
-//     global: globalReducer,
-     
-//   },
-// });
-
 const store = configureStore({
   reducer: {
     global: globalReducer,

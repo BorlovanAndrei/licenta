@@ -14,15 +14,29 @@ const authStore = create((set) => ({
     updateLoginForm: (e) => {
         const {name, value} = e.target
 
-        set((state) =>{
-            return{
-                loginForm: {
-                    ...state.loginForm,
-                    [name]: value,
-                },
-            };
-        });
 
+        if (name === "email") {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+              set((state) => ({
+                loginForm: {
+                  ...state.loginForm,
+                  [name]: value,
+                },
+                errorMessage: "Invalid email format (a@a.a)",
+                showError: true,
+              }));
+              return;
+            }
+          }
+      
+          set((state) => ({
+            loginForm: {
+              ...state.loginForm,
+              [name]: value,
+            },
+            showError: false,
+          }));
     },
 
     login: async (e) =>{

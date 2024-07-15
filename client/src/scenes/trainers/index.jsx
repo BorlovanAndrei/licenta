@@ -10,6 +10,10 @@ const Trainers = () => {
     console.log("data", data);
     const [isAddingTrainer, setIsAddingTrainer] = useState(false);
     const [isEditingTrainer, setIsEditingTrainer] = useState(false);
+    const [emailError, setEmailError] = useState('');
+    const [editEmailError, setEditEmailError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
+    const [editPhoneError, setEditPhoneError] = useState('');
     const [newTrainerData, setNewTrainerData] = useState({
       name: '',
       age: '',
@@ -75,8 +79,64 @@ const Trainers = () => {
     } catch (error) {
         console.error('Failed to delete trainer:', error);
     }
-};
+  };
 
+
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    setNewTrainerData({ ...newTrainerData, email });
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError('Invalid email format');
+    } else {
+      setEmailError('');
+    }
+  };
+
+
+  const handleEditMemberEmailChange = (e) => {
+    const email = e.target.value;
+    setEditTrainerData({ ...editTrainerData, email });
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEditEmailError('Format must be: a@a.a ');
+    } else {
+      setEditEmailError('');
+    }
+  };
+
+  const handlePhoneNumberChange = (e) => {
+    const phoneNumber = e.target.value;
+    setNewTrainerData({ ...newTrainerData, phoneNumber });
+
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      setPhoneError('Phone number must be exactly 10 digits');
+    } else {
+      setPhoneError('');
+    }
+  };
+
+  const handleEditPhoneNumberChange = (e) => {
+    const phoneNumber = e.target.value;
+    setEditTrainerData({ ...editTrainerData, phoneNumber });
+
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      setEditPhoneError('Phone number must be exactly 10 digits');
+    } else {
+      setEditPhoneError('');
+    }
+  };
+
+
+  const handleKeyPress = (e) => {
+    if (!/[0-9]/.test(e.key)) {
+      e.preventDefault();
+    }
+  };
 
     const columns = [
         {
@@ -221,18 +281,25 @@ const Trainers = () => {
             onChange={(e) => setNewTrainerData({ ...newTrainerData, age: e.target.value })}
             fullWidth
             margin="normal"
+            type="number"
           />
           <TextField
             label="Email"
             value={newTrainerData.email}
-            onChange={(e) => setNewTrainerData({ ...newTrainerData, email: e.target.value })}
+            onChange={handleEmailChange}
+            error={Boolean(emailError)}
+              helperText={emailError}
             fullWidth
             margin="normal"
           />
           <TextField
             label="Phone Number"
             value={newTrainerData.phoneNumber}
-            onChange={(e) => setNewTrainerData({ ...newTrainerData, phoneNumber: e.target.value })}
+            onChange={handlePhoneNumberChange}
+            error={Boolean(phoneError)}
+            helperText={phoneError}
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+            onKeyPress={handleKeyPress}            
             fullWidth
             margin="normal"
           />
@@ -275,18 +342,25 @@ const Trainers = () => {
             onChange={(e) => setEditTrainerData({ ...editTrainerData, age: e.target.value })}
             fullWidth
             margin="normal"
+            type="number"
         />
         <TextField
             label="Email"
             value={editTrainerData.email}
-            onChange={(e) => setEditTrainerData({ ...editTrainerData, email: e.target.value })}
+            onChange={handleEditMemberEmailChange}
+            error={Boolean(editEmailError)}
+            helperText={editEmailError}
             fullWidth
             margin="normal"
         />
         <TextField
             label="Phone Number"
             value={editTrainerData.phoneNumber}
-            onChange={(e) => setEditTrainerData({ ...editTrainerData, phoneNumber: e.target.value })}
+            onChange={handleEditPhoneNumberChange}
+            error={Boolean(editPhoneError)}
+            helperText={editPhoneError}
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+            onKeyPress={handleKeyPress}
             fullWidth
             margin="normal"
         />
